@@ -1,15 +1,15 @@
 {
-  "serverPort" :5000,
-  "DB_NAME" : "postgres",
+  "serverPort" :5001,
+  "DB_NAME" : "omedia",
   "DB_USER": "postgres",
-  "DB_PASSWORD": "1234qwer",
-  "DB_HOST": "81.177.6.246",
+  "DB_PASSWORD": "Barah396525",
+  "DB_HOST": "localhost",
   "DB_PORT": 5432,
   "jwtAccessSecret": "omedia",
   "jwtRefreshSecret": "group",
   "jwtDeviceSecret": "device",
-  "api_url": "http://localhost:5000",
-  "client_url": "http://localhost:3000",
+  "api_url": "http://localhost:5001",
+  "client_url": "http://localhost:3001",
   "file_path": "\\\\localhost\\files\\",
   "public_path": "\\\\localhost\\files\\"
 }

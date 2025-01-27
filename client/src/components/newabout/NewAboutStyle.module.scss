@@ -102,11 +102,13 @@
         padding: 30px;
         font-weight: 400;
         font-size: 30px;
+        white-space: pre-line;
         //background: linear-gradient(60deg, #452684, #592684);
         background-color: #410099;
         color: #FFF;
         p{
           margin-top: 10px;
+          white-space: pre-line;
         }
       }
     }

@@ -8,10 +8,7 @@ const cookieParser = require('cookie-parser')
 const fileUpload = require('express-fileupload')
 const router = require('./routes/index')
 const errorMiddlewere = require('./middlewere/error.middlewere')
-
-const path = require('path');
-
-
+const path = require("path");
 
 app.use(fileUpload({}))
 
@@ -24,28 +21,31 @@ app.use(cookieParser())
 app.use(express.json({ extended: true,limit: '3mb' }))
 app.use(express.urlencoded({ extended: true,limit: '3mb' }))
 app.use('/api', router)
+
+
+app.use('/media', express.static('/var/www/adminomedia/client/build/'));
+app.use('/video', express.static('/home/www/adminomedia/client/build/videos/'));
+app.use(express.static(path.join(__dirname, 'client', 'build')));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+});
+
 app.use(errorMiddlewere) //Обязательно последний!
-// // Подключаем папку с билдом React-приложения
-// app.use(express.static(path.join(__dirname, 'client', 'build')));
-//
-// // Для всех остальных запросов отдаем index.html
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
-// });
+
 const start = async () => {
     try{
-
-        // await mailService.sendActivationMail('barahtasurgut@gmail.com','test!')
-        await sequelize.authenticate()
-        // await sequelize.sync({ force: true })
-        console.log('connect to DB')
         app.listen(PORT,() => {
             console.log('Server started on port : ', PORT)
         })
+        //await mailService.sendActivationMail('test@gmail.com','test!')
+        await sequelize.authenticate()
+        // await sequelize.sync({ alter: true })
+        console.log('connect to DB')
+
     }catch (e){
         console.log(e)
-        console.error('Unable to connect to the database:', e.message);
-        console.error(e.stack);  // Вывод стека ошибки для подробного анализа
+
     }
 }
 

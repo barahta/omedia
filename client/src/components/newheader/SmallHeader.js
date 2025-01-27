@@ -26,7 +26,7 @@ function SmallHeader(){
 
                 <div className={style.rightpart}>
                     <div className={style.board}>
-                        <Link to="/#activegroup" className={`${style.btn} ${style.left} ${style.down}`}>Активы группы<div className={style.border}></div>
+                        <Link to="/activegroup" className={`${style.btn} ${style.left} ${style.down}`}>Активы группы<div className={style.border}></div>
                         </Link>
                         {/*<div className={style.btn}>О нас<div className={style.border}></div></div>*/}
                         <Link to='/allnews' className={`${style.btn} ${style.right} ${style.down}`}>Новости<div className={style.border}></div></Link>

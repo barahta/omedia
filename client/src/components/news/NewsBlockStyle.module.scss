@@ -18,6 +18,9 @@
       background-color: #FFF;
       margin-bottom: 50px;
       //background-color: #000;
+      .btnsnext{
+        display: none;
+      }
       .title{
         width: calc(100% - 60px);
         padding: 0 30px;
@@ -30,6 +33,9 @@
         margin-bottom: 50px;
         margin-top: 100px;
       }
+      .newsmobile{
+        display: none;
+      }
       .news{
         width: calc(100% - 60px);
         max-width: 1920px;
@@ -38,8 +44,47 @@
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
+        .nextbtn:hover{
+          border: 1px solid #410099;
+          transition: 0.2s;
+        }
+        .nextbtn{
+          width: 98px;
+          height: 100%;
+          border: 1px solid #CCC;
+          min-height: 560px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          transition: 0.2s;
+          cursor: pointer;
+          .next{
+            width: 55px;
+            height: 70px;
+            background-image: url("../images/next.svg");
+            background-size: 98%;
+            background-repeat: no-repeat;
+            transition: 0.2s ease-in-out;
+            background-position: center center;
+            margin: 0 0px 0 0;
+            border: none;
+          }
+          .turnnext{
+            width: 55px;
+            height: 70px;
+            background-image: url("../images/next.svg");
+            background-size: 98%;
+            background-repeat: no-repeat;
+            transition: 0.2s ease-in-out;
+            background-position: center center;
+            margin: 0 0px 0 0;
+            border: none;
+            transform: rotate(180deg);
+          }
+        }
+
         .news_block{
-          width: calc(100% / 3 - 30px);
+          width: calc(100% / 3 - 30px - (200px / 3));
           height: 100%;
           min-height: 500px;
           display: flex;
@@ -62,11 +107,11 @@
           }
           .date{
             width: calc(100% - 60px);
-            font-size: 20px;
+            font-size: 14px;
           }
           .name{
             width: calc(100% - 60px);
-            font-size: 28px;
+            font-size: 20px;
             margin-top: 20px;
             transition: 0.2s ease-in-out;
           }
@@ -205,17 +250,26 @@
         margin-top: 50px;
         text-align: center;
       }
+
       .news{
+        display: none;
+
+      }
+      .newsmobile{
         width: calc(100% - 0px);
-        max-width: 1920px;
+        //max-width: 1920px;
         height: 100%;
         min-height: 500px;
         display: flex;
-        flex-direction: column;
+        //flex-direction: column;
         //justify-content: space-between;
         align-items: flex-start;
+        overflow: hidden;
+        transition: transform 0.5s ease;
         .news_block{
           width: calc(100% / 1);
+          min-width: 100%;
+          box-sizing: border-box;
           height: 100%;
           min-height: 500px;
           display: flex;
@@ -223,7 +277,7 @@
           align-items: center;
           justify-content: flex-start;
           background-color: #FFFFFF;
-          padding: 30px 0;
+          padding: 30px 0px;
           position: relative;
           cursor: pointer;
           transition: 0.2s ease-in-out;
@@ -346,6 +400,53 @@
           }
         }
       }
+      .btnsnext{
+        width: 100%;
+        height: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: -49px;
+        div{
+          border: 1px solid #CCC;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .next{
+            width: 55px;
+            height: 70px;
+            background-image: url("../images/next.svg");
+            background-size: 98%;
+            background-repeat: no-repeat;
+            transition: 0.2s ease-in-out;
+            background-position: center center;
+            margin: 0 0px 0 0;
+            border: none;
+          }
+          .turnnext{
+            width: 55px;
+            height: 70px;
+            background-image: url("../images/next.svg");
+            background-size: 98%;
+            background-repeat: no-repeat;
+            transition: 0.2s ease-in-out;
+            background-position: center center;
+            margin: 0 0px 0 0;
+            border: none;
+            transform: rotate(180deg);
+          }
+        }
+        .left{
+          width: calc(50% - 2px);
+        }
+        .right{
+          width: calc(50% - 1px);
+          margin-left: -1px;
+        }
+      }
+
     }
+
   }
 }

@@ -4,6 +4,7 @@ import {useState} from "react";
 import OpenNews from "../news/OpenNews";
 import BigModal from "../modalwin/BigModal";
 import ShowActives from "./ShowActives";
+import NewsService from "../../services/NewsService";
 
 function Actives (){
 
@@ -55,9 +56,24 @@ function Actives (){
 
     ]
 
-    const openACTV = (index) => {
-        setActivemodal(true)
-        setData(actvholding[index])
+    const getLines = async () => {
+
+    }
+
+    const openACTV = async (index) => {
+        const places = ['radio','tv','cifra','pr','more']
+        try{
+            const {data} = await NewsService.getPlaces({act: places[index]})
+            console.log(data)
+            if(data){
+                setActivemodal(true)
+                setData(data)
+            }
+        }catch(e){
+            console.log(e)
+        }
+
+
     }
 
     useEffect(() => {
@@ -108,7 +124,7 @@ function Actives (){
                             <div className={style.next}></div>
                         </div>
                         <div className={style.right}>
-                            <div className={style.text}>Рекалама и Маркетинг</div>
+                            <div className={style.text}>Реклама и Маркетинг</div>
                         </div>
                     </div>
                     <div className={style.four} onClick={()=>openACTV(4)}>

@@ -40,23 +40,19 @@ const darkThemeStyle = {
     ]
 };
 
-const MyMap = () => {
-    const coordinates = [61.2545566,73.4257884]; // Пример: Москва, Красная площадь
+const MyMap = ({mapw, maph}) => {
+    const coordinates = [parseFloat(mapw),parseFloat(maph)];
 
     return (
         <YMaps>
             <Map
                 defaultState={{
                     center: coordinates,
-                    zoom: 10,
+                    zoom: 15,
                     controls: [] // Убираем стандартные элементы управления для кастомизации
                 }}
                 width="100%"  // Укажите ширину карты
                 height="400px" // Укажите высоту карты
-                options={{
-                    // Добавляем стили карты
-                    styles: darkThemeStyle
-                }}
             >
                 <Placemark geometry={coordinates} />
             </Map>
@@ -65,3 +61,4 @@ const MyMap = () => {
 };
 
 export default MyMap;
+

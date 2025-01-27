@@ -51,8 +51,10 @@
         width: 100%;
         max-width: 800px;
 
+        white-space: pre-wrap;
         p{
           margin-bottom: 20px;
+          white-space: pre-wrap;
         }
 
         padding-bottom: 200px;

@@ -4,12 +4,12 @@ function OpenNews({news, width}){
     return(
         <div className={style.main} style={(width)?{maxWidth: width}:{}}>
             <div className={style.conatiner}>
-                <div className={style.title}>{news.name}</div>
+                <div className={style.title}>{news.title}</div>
                 <div className={style.image}>
-                    <img src={`/files/news/${news.url}`} alt=""/>
+                    <img src={(news.imagefull)?`${process.env.REACT_APP_API_URL}/${news.imagefull}`:`${process.env.REACT_APP_API_URL}/${news.image}`} alt=""/>
                 </div>
                 <div className={style.content}>
-                    {(news.content)&&news.content.map((line, index)=>(
+                    {(news.text)&&news.text.map((line, index)=>(
                         <p key={index}>{line}</p>
                     ))}
                 </div>

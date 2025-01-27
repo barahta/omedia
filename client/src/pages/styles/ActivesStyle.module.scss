@@ -34,7 +34,9 @@
         .ontheleft{
             width: 300px;
             height: 490px;
-            background-size: cover;
+            background-size: 80%;
+          background-repeat: no-repeat;
+          background-position: center center;
           padding-left: 20px;
         }
         .ontheright{
@@ -73,7 +75,7 @@
           justify-content: center;
           align-items: center;
           .urllink{
-
+            color: #454545;
             width: 200px;
             padding: 20px 50px;
             border: 1px solid #CCC;
@@ -186,6 +188,7 @@
           margin-top: 20px;
           .urllink{
 
+            color: #454545;
             width: 200px;
             padding: 20px 50px;
             border: 1px solid #CCC;
@@ -299,6 +302,7 @@
           margin-top: 20px;
           .urllink{
 
+            color: #454545;
             width: 200px;
             padding: 20px 50px;
             border: 1px solid #CCC;
@@ -414,6 +418,7 @@
           margin-top: 20px;
           .urllink{
 
+            color: #454545;
             width: calc(100% - 100px);
             padding: 20px 50px;
             border: 1px solid #CCC;

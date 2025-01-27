@@ -8,6 +8,7 @@ import FormModal from "../components/modalwin/FormModal";
 import PostContact from "../components/forms/PostContact";
 import WriteModal from "../components/modalwin/WriteModal";
 import PostResume from "../components/forms/PostResume";
+import NewsService from "../services/NewsService";
 
 function AllNews (){
 
@@ -391,7 +392,35 @@ function AllNews (){
     const [checkvak, setCheckvak] = useState('')
     const [activemodal, setActivemodal] = useState(false)
     const [data, setData] = useState('')
+    const [listcom, setListcom] = useState([]);
+    const [listVaks, setListVaks] = useState([]);
     let totality = 0
+    const getComVak = async () => {
+        try {
+            const {data} = await NewsService.getComVak()
+            const filteredData = data.filter(item => item.category === 'omedia');
+            setListcom(filteredData);
+        }catch(e){
+            console.log(e)
+        }
+    }
+    const getVakansii = async () => {
+        try {
+            const {data} = await NewsService.getVakansii()
+            const newarr = []
+            data.forEach((item)=>{
+               if(item.open){
+
+               } else{
+                   newarr.push(item)
+               }
+            })
+            setListVaks(newarr)
+            console.log(newarr)
+        }catch(e){
+            console.log(e)
+        }
+    }
 
     const calcTotal = () => {
         vakansii.forEach(pos=>{
@@ -400,31 +429,34 @@ function AllNews (){
         return totality
     }
 
-    const [usevak, setUsevak] = useState(vakansii)
+    const [usevak, setUsevak] = useState([])
 
-    const handlerPosition = (index) => {
-        if(index + 1 > 0){
-            let newlist = vakansii[index]
-            let list = []
-            list.push(newlist)
-            setUsevak(list)
-        }else{
-            setUsevak(vakansii)
+    const handlerPosition = (com) => {
+        const list = [...listVaks];
+        if (com) {
+            const newarr = list.filter(item => item.company === com);
+            setUsevak(newarr);
+        } else {
+            setUsevak(list);
         }
 
+        // Прокрутка к самому верху страницы
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Плавная прокрутка
+        });
+    };
 
-    }
-
-    const openPosition = (room, pos) => {
+    const openPosition = (pos) => {
         const newlist = [...usevak]
-        if(newlist[room].positions[pos].open === false){
-            newlist[room].positions[pos].open = true
-            const thisTit = document.getElementById(`tit${room}${pos}`)
+        if(newlist[pos].open === false){
+            newlist[pos].open = true
+            const thisTit = document.getElementById(`tit${pos}`)
             thisTit.lastChild.style.rotate = '90deg'
             console.log(thisTit.lastChild)
         }else{
-            newlist[room].positions[pos].open = false
-            const thisTit = document.getElementById(`tit${room}${pos}`)
+            newlist[pos].open = false
+            const thisTit = document.getElementById(`tit${pos}`)
             thisTit.lastChild.style.rotate = '0deg'
         }
 
@@ -437,8 +469,23 @@ function AllNews (){
         setActivemodal(true)
     }
 
+    const getLength = (com) => {
+        const list = [...listVaks]
+        const newarr = list.filter(item => item.company === com);
+        const long = newarr.length
+
+        return long
+    }
+
     useEffect(()=>{
-    })
+        getComVak()
+    }, [])
+    useEffect(()=>{
+        getVakansii()
+    }, [listcom])
+    useEffect(()=>{
+        setUsevak(listVaks)
+    }, [listVaks])
 
     return (
         <div className={style.bodymain}>
@@ -451,69 +498,66 @@ function AllNews (){
                     <div className={style.block}>
                         <div className={style.leftpart}>
                             <div className={style.navigate}>
-                                <div className={style.point} onClick={()=>handlerPosition()}>Все вакансии<div className={style.total}>{calcTotal()}</div></div>
-                                {vakansii.map((point, index) => (
-                                    <div key={index} className={style.point} onClick={()=>handlerPosition(index)}>{point.name}<div className={style.total}>
-                                        {point.positions.length}
+                                <div className={style.point} onClick={()=>handlerPosition()}>Все вакансии<div className={style.total}>{(listVaks)&&listVaks.length}</div></div>
+                                {(listcom)&&listcom.map((point, index) => (
+                                    <div key={index} className={style.point} onClick={()=>handlerPosition(point.name)}>{point.name}<div className={style.total}>
+                                        {getLength(point.name)}
                                     </div></div>
                                 ))}
                             </div>
                         </div>
                         <div className={style.rightpart}>
-                            {usevak.map((com, index) => {
-                                return (
-                                    <div key={index} className={style.list}>
-                                        {com.positions.map((pos, posIndex) => (
-                                            <div key={posIndex} className={style.position}>
-                                                <div className={style.title} id={`tit${index}${posIndex}`} onClick={()=>openPosition(index, posIndex)}>
-                                                    <div className={style.text}>{pos.name}</div>
-                                                    <div className={style.next}></div>
+
+                            <div className={style.list}>
+                                {(usevak)&&usevak.map((pos, posIndex) => (
+                                    <div key={posIndex} className={style.position}>
+                                        <div className={style.title} id={`tit${posIndex}`} onClick={()=>openPosition(posIndex)}>
+                                            <div className={style.text}>{pos.name}</div>
+                                            <div className={style.next}></div>
+                                        </div>
+
+                                        <div className={style.units} style={(pos.open)?{display:'flex'}:{}}>
+                                            <div className={style.name} style={(pos.requierments.length > 0)?{}:{display: 'none'}}>Требования</div>
+
+                                            {/* Список требований */}
+                                            {pos.requierments && pos.requierments.map((req, reqIndex) => (
+                                                <div key={reqIndex} className={style.points}>
+                                                    <div className={style.slash}></div>
+                                                    <div className={style.text}>{req}</div>
                                                 </div>
+                                            ))}
 
-                                                <div className={style.units} style={(pos.open)?{display:'flex'}:{}}>
-                                                    <div className={style.name} style={(pos.requierments.length > 0)?{}:{display: 'none'}}>Требования</div>
+                                            <div className={style.name} style={(pos.respon.length > 0)?{}:{display: 'none'}}>Обязанности</div>
 
-                                                    {/* Список требований */}
-                                                    {pos.requierments && pos.requierments.map((req, reqIndex) => (
-                                                        <div key={reqIndex} className={style.points}>
-                                                            <div className={style.slash}></div>
-                                                            <div className={style.text}>{req}</div>
-                                                        </div>
-                                                    ))}
-
-                                                    <div className={style.name} style={(pos.respon.length > 0)?{}:{display: 'none'}}>Обязанности</div>
-
-                                                    {/* Список обязанностей */}
-                                                    {pos.respon && pos.respon.map((res, resIndex) => (
-                                                        <div key={resIndex} className={style.points}>
-                                                            <div className={style.slash}></div>
-                                                            <div className={style.text}>{res}</div>
-                                                        </div>
-                                                    ))}
-
-                                                    <div className={style.name} style={(pos.conditions.length > 0)?{}:{display: 'none'}}>Условия</div>
-
-                                                    {/* Список условий */}
-                                                    {pos.conditions && pos.conditions.map((cond, condIndex) => (
-                                                        <div key={condIndex} className={style.points}>
-                                                            <div className={style.slash}></div>
-                                                            <div className={style.text}>{cond}</div>
-                                                        </div>
-                                                    ))}
-                                                    <div className={style.name} style={(pos.keyskills.length > 0)?{}:{display: 'none'}}>Ключевые навыки</div>
-
-                                                    <div className={style.skillspoints}>
-                                                        {pos.keyskills && pos.keyskills.map((skill, skillIndex) => (
-                                                            <div key={skillIndex} className={style.keypoint}>{skill}</div>
-                                                        ))}
-                                                    </div>
-                                                    <div className={style.btnresume} onClick={()=>postResume(pos)}>Откликнуться</div>
+                                            {/* Список обязанностей */}
+                                            {pos.respon && pos.respon.map((res, resIndex) => (
+                                                <div key={resIndex} className={style.points}>
+                                                    <div className={style.slash}></div>
+                                                    <div className={style.text}>{res}</div>
                                                 </div>
+                                            ))}
+
+                                            <div className={style.name} style={(pos.conditions.length > 0)?{}:{display: 'none'}}>Условия</div>
+
+                                            {/* Список условий */}
+                                            {pos.conditions && pos.conditions.map((cond, condIndex) => (
+                                                <div key={condIndex} className={style.points}>
+                                                    <div className={style.slash}></div>
+                                                    <div className={style.text}>{cond}</div>
+                                                </div>
+                                            ))}
+                                            <div className={style.name} style={(pos.keyskills.length > 0)?{}:{display: 'none'}}>Ключевые навыки</div>
+
+                                            <div className={style.skillspoints}>
+                                                {pos.keyskills && pos.keyskills.map((skill, skillIndex) => (
+                                                    <div key={skillIndex} className={style.keypoint}>{skill}</div>
+                                                ))}
                                             </div>
-                                        ))}
+                                            <div className={style.btnresume} onClick={()=>postResume(pos)}>Откликнуться</div>
+                                        </div>
                                     </div>
-                                );
-                            })}
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>

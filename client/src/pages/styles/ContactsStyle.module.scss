@@ -65,8 +65,8 @@
           .photo{
             width: calc(1920px / 4 - 50px);
             height: calc(1920px / 3 - 50px);
-            max-width: 300px;
-            max-height: 400px;
+            max-width: 239px;
+            max-height: 330px;
             background-image: url("../imgs/avatar.png");
             background-size: cover;
             background-position: center center;
@@ -74,18 +74,19 @@
           }
           .fio{
             width: calc(1920px / 4 - 50px);
-            max-width: 300px;
+            max-width: 239px;
             .name{
               font-weight: 600;
             }
           }
           .dev{
             width: calc(1920px / 4 - 50px);
-            max-width: 300px;
+            max-width: 239px;
+            min-height: 60px;
           }
           .btncontact{
             width: calc(1920px / 4 - 50px);
-            max-width: 300px;
+            max-width: 239px;
             padding: 20px 0;
             margin-top: 20px;
             border: 1px solid #454545;

@@ -2,13 +2,26 @@ import style from './NewHeaderStyle.module.scss';
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 
+import NewsService from "../../services/NewsService";
 function NewHeader() {
     const [showVideo, setShowVideo] = useState(false);
+
+    // const allViews = async () => {
+    //     try {
+    //         const {data} = await NewsService.viewPost()
+    //         if(data){
+    //             console.log(data)
+    //         }
+    //     }catch (e) {
+    //         console.log(e)
+    //     }
+    // }
+
     useEffect(() => {
         const timer = setTimeout(() => {
             setShowVideo(true);
         }, 500);
-
+        // allViews()
         return () => clearTimeout(timer);
     }, []);
     return (
@@ -23,7 +36,7 @@ function NewHeader() {
                     playsInline
                     className={style.videoContent}
                 >
-                    <source src="/files/header/intro.mp4" type="video/mp4" />
+                    <source src={`/video/omedia/video.mp4`} type="video/mp4" />
                 </video>
                 )}
             </div>

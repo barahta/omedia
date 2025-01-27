@@ -10,11 +10,11 @@ function NewsPost ({post, setActivemodal, activemodal, data, setData}){
     return (
         <div className={style.news_block} onclick={()=>openPost(post)}>
             <div className={style.content}>
-                <div className={style.img}><img src={`/files/news/${post.url}`} alt=""/></div>
+                <div className={style.img}><img src={`${process.env.REACT_APP_API_URL}/${post.image}`} alt=""/></div>
 
                 {/*<div className={style.img} style={{backgroundImage: `url('/files/news/${post.url}')`}}></div>*/}
-                <div className={style.date}>{post.date}</div>
-                <div className={style.name}>{(post.name.length > 80)?post.name.slice(0, 80) + '...':post.name}</div>
+                <div className={style.date}>{post.createdAt}</div>
+                <div className={style.name}>{(post.title.length > 80)?post.title.slice(0, 80) + '...':post.title}</div>
                 <div className={style.active}></div>
             </div>
             <div className={style.btnblock} onclick={()=>openPost(post)}>

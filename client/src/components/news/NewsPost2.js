@@ -6,15 +6,14 @@ function NewsPost ({post, setActivemodal, activemodal, data, setData}){
         setActivemodal(true)
         setData(post)
     }
-
+    console.log(post)
     return (
         <div className={style.news_block} onclick={()=>openPost(post)}>
             <div className={style.content}>
-                <div className={style.img}><img src={`/files/news/${post.url}`} alt=""/></div>
-
+                <div className={style.img}><img src={`${process.env.REACT_APP_API_URL}${post.image}`} alt=""/></div>
                 {/*<div className={style.img} style={{backgroundImage: `url('/files/news/${post.url}')`}}></div>*/}
-                <div className={style.date}>{post.date}</div>
-                <div className={style.name}>{(post.name.length > 80)?post.name.slice(0, 80) + '...':post.name}</div>
+                <div className={style.date}>{(post.createdAt)&&post.createdAt.slice(0, 10).split('-').reverse().join('.')}</div>
+                <div className={style.name}>{(post.title && post.title.length > 140)?post.title.slice(0, 140) + '...':post.title}</div>
                 <div className={style.active}></div>
             </div>
             <div className={style.btnblock} onclick={()=>openPost(post)}>

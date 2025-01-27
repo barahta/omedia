@@ -1,6 +1,25 @@
 import style from './NewAboutStyle.module.scss'
+import {useEffect, useState} from "react";
+import NewsService from "../../services/NewsService";
 
 function NewAbout(){
+
+    const [aboutText, setAboutText] = useState('')
+    const getAbout = async () => {
+        try{
+            const {data} = await NewsService.getAbout({company: 'omedia'})
+            if(data){
+                setAboutText(data.text)
+            }
+        }catch(e){
+            console.log(e)
+        }
+    }
+
+    useEffect(()=>{
+        getAbout()
+    },[])
+
     return (
         <div className={style.main}>
             <div className={style.containter}>
@@ -13,20 +32,7 @@ function NewAbout(){
                     <div className={style.active}></div>
                 </div>
                 <div className={style.text}>
-                    <p>Проект «OMEDIA! Настоящие» — молодой, но объединяет
-                        множество знакомых и любимых жителям Югры и Сургута
-                        площадок
-                    </p>
-                    <p>
-                        Наши принципы – честность, открытость, актуальность и
-                        помощь тем, кто в ней нуждается. Поэтому компания
-                        активно участвует и сама реализует социальные проекты.
-                        Наш постоянный партнер — благотворительный фонд
-                        «Траектория надежды».
-                        Информационная политика — обязательная проверка фактов,
-                        оперативность, «народные новости» - то, что действительно
-                        волнует нашу аудиторию
-                    </p>
+                    <p>{(aboutText)&&aboutText}</p>
                 </div>
             </div>
         </div>
